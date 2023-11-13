@@ -1,9 +1,33 @@
+import org.w3c.dom.events.Event;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TiendaVideojuegos {
+    JDialog dialog;
+    private class ClickListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Label dialogLabel = new Label();
 
-    public static void main(String[] args) {
+            String titulo = "Titulo Dummy";
+            String consola = "consola Dummy";
+            System.out.println(titulo);
+            System.out.println(consola);
+            dialogLabel.setText(consola + "" + titulo);
+
+            dialog.add(dialogLabel);
+            dialog.setVisible(true);
+        }
+
+    }
+
+    private void showDialog(ActionEvent e, JDialog dialog) {
+        dialog.setVisible(true);
+    }
+
+    public void main(String[] args) {
         JFrame frame = new JFrame("Video Game Store");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -24,7 +48,9 @@ public class TiendaVideojuegos {
         JCheckBox checkBox = new JCheckBox("Nuevo");
         checkBox.setBounds(20, 60, 100, 30);
 
-        JComboBox<String> comboBox = new JComboBox<>(new String[]{"PS5", "Xbox Series", "Nintendo Switch"});
+        String[] consolaList = new String[]{"PS5", "Xbox Series", "Nintendo Switch"};
+
+        JComboBox<String> comboBox = new JComboBox<>(consolaList);
         comboBox.setBounds(20, 100, 150, 30);
 
         JList<String> list = new JList<>(new String[]{"FIFA 23", "COD", "Minecraft"});
@@ -50,12 +76,13 @@ public class TiendaVideojuegos {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(20, 320, 150, 30);
 
-        JDialog dialog = new JDialog(frame, "Confirmación", true);
+        dialog = new JDialog(frame, "Confirmación", true);
         dialog.setLayout(new FlowLayout());
-        dialog.add(new JLabel("Compra realizada con éxito"));
         dialog.setSize(200, 100);
 
-        button.addActionListener(e -> dialog.setVisible(true));
+        ClickListener clickListener = new ClickListener();
+
+        button.addActionListener(clickListener);
 
         // Añadir elementos a los paneles
         panelNullLayout.add(button);
